@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — PickleHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { background: var(--cream); overflow-y: auto; padding: 0; }
+    .auth-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    /* Overrides so it's not a popup overlay anymore */
+    .admin-container { padding: 40px; max-width: 1200px; margin: 0 auto; display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="auth-wrapper" id="adminAuthView">
+    <div class="auth-card" style="transform: none; position: relative;">
+      <a href="picklehub.html" class="modal-close-btn auth-close" style="text-decoration:none;" title="Back to Home">✕</a>
+      
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="tabSignIn" onclick="switchAuthTab('signin')">Sign In</button>
+        <button class="auth-tab-btn" id="tabRegister" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <div class="auth-form-view active" id="formSignIn">
+        <h3>Staff Access Portal</h3>
+        <p class="auth-subtitle">Enter your internal employee credentials to access the management interface.</p>
+        
+        <div class="auth-field">
+          <label>Employee Email</label>
+          <input type="email" id="authSignInEmail" placeholder="name@picklehub.ph" value="admin@picklehub.ph" />
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="authSignInPassword" placeholder="••••••••" value="password123" />
+        </div>
+        
+        <button class="btn-auth-submit" onclick="handleAdminSignIn()">
+          <span class="auth-btn-text">Authorize & Enter</span>
+          <div class="spinner" id="signInSpinner"></div>
+        </button>
+<p class="auth-hint" style="line-height: 1.6;">
+  💡 <strong>Demo Mode Credentials:</strong><br>
+  Employee Email: <strong>admin@picklehub.ph</strong><br>
+  Password: <strong>password123</strong>
+</p>      </div>
+
+      <div class="auth-form-view" id="formRegister">
+        <h3>Request Administrative Access</h3>
+        <p class="auth-subtitle">Create a new staff profile. All registrations undergo supervisor validation.</p>
+        
+        <div class="auth-field">
+          <label>Full Name</label>
+          <input type="text" id="authRegName" placeholder="Juan Dela Cruz" />
+        </div>
+        <div class="auth-field">
+          <label>Official Email</label>
+          <input type="email" id="authRegEmail" placeholder="username@picklehub.ph" />
+        </div>
+        <div class="auth-field">
+          <label>Create Secure Password</label>
+          <input type="password" id="authRegPassword" placeholder="Minimum 6 characters" />
+        </div>
+
+        <button class="btn-auth-submit" onclick="handleAdminRegister()">
+          <span class="auth-btn-text">Submit Request</span>
+          <div class="spinner" id="registerSpinner"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-container" id="adminDashboardSection">
+      <div class="dashboard-header">
+        <div class="db-title-area">
+          <span class="db-badge">Staff Mode</span>
+          <h2>PickleHub Executive Management Dashboard</h2>
+        </div>
+        <a href="picklehub.html" class="btn-close-dashboard" style="text-decoration:none;">Back to Website ✕</a>
+      </div>
+
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <div class="card-icon" style="background: rgba(45, 90, 61, 0.1); color: var(--green-dark);">📅</div>
+          <div class="card-info">
+            <h3>Total Bookings Scheduled</h3>
+            <p id="statTotalBookings">0 Reservations</p>
+          </div>
+        </div>
+        <div class="analytics-card">
+          <div class="card-icon" style="background: rgba(158, 92, 106, 0.1); color: var(--rose-dark);">⚡</div>
+          <div class="card-info">
+            <h3>Peak Occupancy Court</h3>
+            <p>Court 2 (88%)</p>
+          </div>
+        </div>
+        <div class="analytics-card">
+          <div class="card-icon" style="background: rgba(232, 180, 187, 0.2); color: var(--rose-footer);">₱</div>
+          <div class="card-info">
+            <h3>Gross Revenue Generated</h3>
+            <p id="statRevenue">₱0</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-content-split">
+        <div class="table-card">
+          <h3>Live Reservation Table</h3>
+          <div class="table-wrapper">
+            <table class="db-table">
+            <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Contact Information</th>
+                  <th>Selected Court</th>
+                  <th>Date Scheduled</th>
+                  <th>Time & Duration</th>
+                  <th>Payment Amount</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="dashboardTableBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="schedule-sidebar">
+          <h3>Court Schedules Overview</h3>
+          <div class="court-schedule-card">
+            <h4>Court 1 (Indoor Premium)</h4>
+            <div class="timeline-slot filled">06:00 AM - 08:00 AM — Reserved</div>
+            <div class="timeline-slot empty">08:00 AM - 01:00 PM — Available</div>
+            <div class="timeline-slot filled">01:00 PM - 03:00 PM — Reserved</div>
+          </div>
+          <div class="court-schedule-card">
+            <h4>Court 2 (Olympic Standard)</h4>
+            <div class="timeline-slot empty">06:00 AM - 09:00 AM — Available</div>
+            <div class="timeline-slot filled">09:00 AM - 11:00 AM — Reserved</div>
+            <div class="timeline-slot empty">11:00 AM - 10:00 PM — Available</div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

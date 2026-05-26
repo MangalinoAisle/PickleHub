@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PickleHub — The Court Is Yours Anytime</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal-overlay" id="summaryModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Confirm Booking Details</h3>
+        <button class="modal-close-btn" onclick="closeSummaryModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalSummaryContent"></div>
+      <div class="modal-footer">
+        <button class="btn-cancel-modal" onclick="closeSummaryModal()">Make Changes</button>
+        <button class="btn-confirm-modal" onclick="executeFinalBooking()">
+          <span class="btn-text">Pay & Secure Reservation</span>
+          <div class="spinner" id="modalSpinner"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="successModal">
+    <div class="success-card">
+      <div class="success-icon-wrap">
+        <svg class="checkmark-svg" viewBox="0 0 52 52">
+          <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+      <h2>Booking Secured!</h2>
+      <p>Your court has been successfully reserved. We have sent a digital confirmation pass to your mobile number.</p>
+      <div class="success-details" id="successSummaryContent"></div>
+      <button class="btn-success-close" onclick="closeSuccessModal()">See You On The Court</button>
+    </div>
+  </div>
+
+  <nav id="navbar">
+    <ul class="nav-links">
+      <li><a href="#story" class="nav-link-item">story</a></li>
+      <li><a href="#why-choose-us" class="nav-link-item">benefits</a></li>
+      <li><a href="#services" class="nav-link-item">services</a></li>
+    </ul>
+
+    <a href="#hero" class="nav-logo">
+      <img src="images/logo.png" alt="PickleHub Logo" style="height: 35px; width: auto; vertical-align: middle;">
+    </a>
+    
+    <ul class="nav-right">
+      <li><a href="#book" class="nav-link-item">book</a></li>
+      <li><a href="#testimonials" class="nav-link-item">reviews</a></li>
+      <li><a href="#contact" class="nav-link-item">contact</a></li>
+      <li><a href="admin.html" class="btn-admin-auth-trigger" aria-label="Admin Access Portal" style="text-decoration:none;">👤</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">✕</button>
+    <a href="#story" onclick="closeMobile()">Story</a>
+    <a href="#why-choose-us" onclick="closeMobile()">Why Choose Us</a>
+    <a href="#services" onclick="closeMobile()">Services</a>
+    <a href="#book" onclick="closeMobile()">Book a Court</a>
+    <a href="#testimonials" onclick="closeMobile()">Testimonials</a>
+    <a href="#contact" onclick="closeMobile()">Contact</a>
+    <a href="admin.html" class="btn-dashboard-toggle" style="margin-top: 20px; padding: 12px 24px; text-decoration: none;">👤 Staff Portal</a>
+  </div>
+
+  <section id="hero">
+    <div class="hero-content">
+      <h1>The Court<br><em>Is Yours</em><br>Anytime</h1>
+      <p class="hero-sub">Premium courts, certified coaches, and a community built for every skill level. Book online in seconds.</p>
+      <div class="hero-btns">
+        <a href="#book" class="btn-primary">Book a Court</a>
+        <a href="#story" class="btn-secondary">Our Story</a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="images/pb-home.png" alt="Pickleball players" />
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="story-img left-img">
+      <img src="images/paddle.png" alt="Pickleball paddles and balls" />
+    </div>
+    <div class="story-text">
+      <h2>Our Story</h2>
+      <p>PickleHub offers training with experienced coaches to help develop skills, improve physical fitness, and achieve athletic goals. We have a spacious recreation area, a gym, and various activities for children and adults.</p>
+      <p>PickleHub was founded in 2019, and we have been inspiring our players to achieve more on the court for over 6 years.</p>
+    </div>
+    <div class="story-img right-img">
+      <img src="images/pp.jpg" alt="Pickleball player" />
+    </div>
+  </section>
+
+  <section id="why-choose-us">
+    <p class="section-eyebrow">Unmatched Facilities & Community</p>
+    <h2 class="section-title">Why Choose PickleHub</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🏸</div>
+        <h3>Premium Shock-Absorption Courts</h3>
+        <p>Pro-grade textured cushioning surface engineered carefully to reduce lower limb joint impact stress while offering consistent ball bounce heights.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📱</div>
+        <h3>Real-time Live Online Booking</h3>
+        <p>No waiting back-and-forth on manual messengers. Select your date, cross-verify court conflicts dynamically, and pay in one step.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🏅</div>
+        <h3>Certified Professional Coaches</h3>
+        <p>Learn mechanics from accredited instructional staff offering tailored programmatic blueprints matching any level of experience.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">☀️</div>
+        <h3>Open Daily for All Players</h3>
+        <p>Operating early mornings to late nights daily, with advanced high-illumination anti-glare overhead stadium court lighting.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">👥</div>
+        <h3>Vibrant Community Tournaments</h3>
+        <p>Gain automated entry passes into structural matching leagues, casual ladder games, social mixers, and festive weekend clinics.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <h2 class="section-title">Our Services</h2>
+    <div class="services-grid">
+      <div class="service-item side-item">
+        <div class="s-img">
+          <img src="images/equipment.png" alt="Private Court Rental" />
+        </div>
+        <h3 class="s-title">Private Court Rental</h3>
+      </div>
+      <div class="service-item center-item">
+        <h3 class="s-title">Equipment Rental</h3>
+        <div class="s-img">
+          <img src="images/rental.png" alt="Equipment Rental" />
+        </div>
+      </div>
+      <div class="service-item side-item">
+        <div class="s-img">
+          <img src="images/coaching.png" alt="Coaching & Lessons" />
+        </div>
+        <h3 class="s-title">Coaching & Lessons</h3>
+      </div>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="book-gallery">
+      <div class="book-gallery-img gallery-top-left"><img src="images/players.png" alt="Players" /></div>
+      <div class="book-gallery-img gallery-top-right"><img src="images/paddle.png" alt="Pickleball paddle" /></div>
+      <div class="book-gallery-img gallery-bottom-left"><img src="images/coaching.png" alt="Coaching session" /></div>
+      <div class="book-gallery-img gallery-bottom-right"><img src="images/pb balls.png" alt="Pickleball balls" /></div>
+    </div>
+
+    <div class="book-form-wrap">
+      <p class="eyebrow">Reserve Your Spot</p>
+      <h2>Book a Court</h2>
+
+      <p class="form-section-label">Contact Information</p>
+      <div class="form-group">
+        <label for="bookName">Full Name</label>
+        <input type="text" id="bookName" placeholder="Your full name" />
+      </div>
+      <div class="form-group">
+        <label for="bookPhone">Mobile Number</label>
+        <input type="tel" id="bookPhone" placeholder="+63 912 345 6789" />
+      </div>
+
+      <p class="form-section-label">Booking Details</p>
+      <div class="form-group">
+        <label for="bookDate">Date Selection</label>
+        <input type="date" id="bookDate" onchange="runLiveAvailabilityCheck()" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="bookStartTime">Start Time</label>
+          <select id="bookStartTime" onchange="runLiveAvailabilityCheck()">
+            <option value="">Select time</option>
+            <option value="06:00">6:00 AM</option>
+            <option value="07:00">7:00 AM</option>
+            <option value="08:00">8:00 AM</option>
+            <option value="09:00">9:00 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="13:00">1:00 PM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+            <option value="17:00">5:00 PM</option>
+            <option value="18:00">6:00 PM</option>
+            <option value="19:00">7:00 PM</option>
+            <option value="20:00">8:00 PM</option>
+            <option value="21:00">9:00 PM</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="bookDuration">Duration</label>
+          <select id="bookDuration" onchange="runLiveAvailabilityCheck()">
+            <option value="">Select hours</option>
+            <option value="1">1 Hour</option>
+            <option value="2">2 Hours</option>
+            <option value="3">3 Hours</option>
+            <option value="4">4 Hours</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="checker-banner status-checking" id="availabilityCheckerBanner" style="display: none;">
+        <span class="banner-icon">🔄</span> <span id="availabilityBannerMessage">Evaluating slot criteria...</span>
+      </div>
+
+      <div class="form-group">
+        <label>Court Selection</label>
+        <div class="court-btns">
+          <button type="button" class="court-btn" id="courtBtn1" onclick="selectCourt(this, '1')">Court 1</button>
+          <button type="button" class="court-btn" id="courtBtn2" onclick="selectCourt(this, '2')">Court 2</button>
+          <button type="button" class="court-btn" id="courtBtn3" onclick="selectCourt(this, '3')">Court 3</button>
+        </div>
+        <input type="hidden" id="bookCourt" value="" />
+      </div>
+
+      <div class="price-estimate-box" id="priceEstimationBox" style="display: none;">
+        <div class="price-row">
+          <span>Base Court Rate (<span id="calcHoursText">0 Hours</span>):</span>
+          <span id="calcBasePrice">₱0</span>
+        </div>
+        <div class="price-row total-row">
+          <span>Estimated Total Cost Due:</span>
+          <span id="calcTotalAmount">₱0</span>
+        </div>
+      </div>
+
+      <p class="form-section-label">Additional Info</p>
+      <div class="form-group">
+        <label for="bookPlayers">Number of Players <span class="optional-tag">(Optional)</span></label>
+        <select id="bookPlayers">
+          <option value="">Select players</option>
+          <option value="1">1 Player</option>
+          <option value="2">2 Players</option>
+          <option value="3">3 Players</option>
+          <option value="4">4 Players</option>
+          <option value="5+">5+ Players</option>
+        </select>
+      </div>
+
+      <div class="form-group terms-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="bookTerms" />
+          <span>I agree to arrive 10 minutes early and understand that cancellations within 24 hours are non-refundable.</span>
+        </label>
+      </div>
+
+      <button class="btn-submit" onclick="submitBookingFormStage()">Confirm Booking</button>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <p class="section-eyebrow">Player Stories</p>
+    <h2 class="section-title">Reviews From Our Community</h2>
+    <div class="testimonials-container">
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="quote">“Best pickleball courts in Pampanga! The cushioning on the premium indoor courts protects my knees, and the lighting configuration is absolutely flawless for nighttime tournament matches!”</p>
+        <p class="author">— Sarah M., <span>Advanced Active Competitor</span></p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="quote">“As a complete amateur, the intuitive live online calendar allowed me to reserve a court in seconds. Our coaching session with the staff yesterday elevated our baseline game immensely.”</p>
+        <p class="author">— Mark D., <span>Recreational Enthusiast</span></p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="quote">“Outstanding community spirit! The weekend league brackets are structurally sound and highly competitive. PickleHub is definitively our corporate team's favorite post-work sport sanctuary.”</p>
+        <p class="author">— Coach Jin P., <span>Pampanga Sports Director</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-form-wrap">
+      <h3>Send Message</h3>
+      <input type="text" id="cName" placeholder="Your Name" />
+      <input type="email" id="cEmail" placeholder="Email Address" />
+      <textarea id="cMessage" placeholder="Message"></textarea>
+      <button class="btn-send" onclick="sendMessage()">Send Message</button>
+    </div>
+
+    <div class="contact-info">
+      <p class="eyebrow">Get in Touch</p>
+      <h2>Let's Talk About<br><em>Pickleball</em></h2>
+
+      <div class="info-item">
+        <div class="label">Location</div>
+        <p>Km 8 National Road, Mabalacat City, Pampanga</p>
+      </div>
+      <div class="info-item">
+        <div class="label">Phone / Mobile</div>
+        <p><a href="tel:+639171234567" style="color: inherit; text-decoration: none;">+63 917 123 4567</a></p>
+      </div>
+      <div class="info-item">
+        <div class="label">Email Enquiries</div>
+        <p><a href="mailto:hello@picklehub.ph" style="color: inherit; text-decoration: none; font-weight: 500;">hello@picklehub.ph</a></p>
+      </div>
+      <div class="info-item">
+        <div class="label">Hours of Operation</div>
+        <p>Mon–Sun: 6:00 AM – 10:00 PM</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="images/logo.png" alt="PickleHub Logo" style="width: 120px; height: auto; display: block; margin-bottom: 12px;">
+        </div>
+        <p>Pampanga's premier pickleball destination. Premium courts, expert coaching, and a vibrant community for all skill levels.</p>
+        
+        <div class="newsletter-wrap">
+          <h5>Join Our Private Newsletter</h5>
+          <div class="newsletter-field">
+            <input type="email" id="newsletterEmailInput" placeholder="Enter your email address" />
+            <button onclick="handleNewsletterSubmit()">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#hero">Home Base</a></li>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#book" class="cta-highlight-link">Book Online Now →</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Location Map</h4>
+        <div class="maps-container-frame">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3848.3304126938945!2d120.5756!3d15.2215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDEzJzE3LjQiTiAxMjDCsDM0JzMyLjIiRQ!5e0!3m2!1sen!2sph!4v1650000000000!5m2!1sen!2sph" 
+            width="100%" height="115" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <div class="hours-item">Mon–Fri: 6AM–10PM</div>
+        <div class="hours-item">Sat–Sun: 6AM–11PM</div>
+        <div class="hours-item">Holidays: 7AM–9PM</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 PickleHub Headquarters. All rights reserved.</span>
+      <span>Designed with Excellence by GAM</span>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
